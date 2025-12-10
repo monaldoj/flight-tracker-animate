@@ -1,0 +1,286 @@
+/* Dark Mode Dropdown Styling */
+
+/* ===== Legacy React-Select (v1) Styles ===== */
+
+/* Main dropdown container */
+.Select-control {
+    background-color: #2c3039 !important;
+    border-color: #3a3f4b !important;
+    color: #e0e0e0 !important;
+}
+
+/* Dropdown input text */
+.Select-input > input {
+    color: #e0e0e0 !important;
+}
+
+/* Selected value text */
+.Select-value-label {
+    color: #e0e0e0 !important;
+}
+
+/* Placeholder text */
+.Select-placeholder {
+    color: #9ca3af !important;
+}
+
+/* Dropdown menu outer wrapper */
+.Select-menu-outer {
+    background-color: #2c3039 !important;
+    border-color: #3a3f4b !important;
+}
+
+/* Dropdown menu inner */
+.Select-menu {
+    background-color: #2c3039 !important;
+}
+
+/* Dropdown options */
+.Select-option {
+    background-color: #2c3039 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Hovered option */
+.Select-option.is-focused {
+    background-color: #3a3f4b !important;
+    color: #ffffff !important;
+}
+
+/* Selected option */
+.Select-option.is-selected {
+    background-color: #12939A !important;
+    color: #ffffff !important;
+}
+
+/* Multi-select value tags */
+.Select-value {
+    background-color: #12939A !important;
+    border-color: #0e7580 !important;
+    color: #ffffff !important;
+}
+
+/* Multi-select value text */
+.Select-multi-value-wrapper .Select-value {
+    background-color: #12939A !important;
+}
+
+/* Remove icon in multi-select */
+.Select-value-icon {
+    border-right-color: #0e7580 !important;
+}
+
+.Select-value-icon:hover {
+    background-color: #0e7580 !important;
+    color: #ffffff !important;
+}
+
+/* ===== Modern React-Select (v2+) Styles ===== */
+
+/* Control (the main input box) */
+.css-1pahdxg-control,
+.css-yk16xz-control,
+div[class*="-control"] {
+    background-color: #2c3039 !important;
+    border-color: #3a3f4b !important;
+}
+
+/* Single value and placeholder */
+.css-1uccc91-singleValue,
+.css-1wa3eu0-placeholder,
+div[class*="-singleValue"],
+div[class*="-placeholder"] {
+    color: #e0e0e0 !important;
+}
+
+/* Menu (dropdown list container) */
+.css-26l3qy-menu,
+.css-2b097c-container div[class*="-menu"],
+div[class*="-menu"] {
+    background-color: #2c3039 !important;
+    border-color: #3a3f4b !important;
+}
+
+/* Menu list */
+div[class*="-MenuList"] {
+    background-color: #2c3039 !important;
+}
+
+/* Options - default state */
+.css-1n7v3ny-option,
+div[class*="-option"] {
+    background-color: #2c3039 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Options - hovered */
+.css-9gakcf-option,
+div[class*="-option"]:hover {
+    background-color: #3a3f4b !important;
+    color: #ffffff !important;
+}
+
+/* Options - selected */
+div[class*="-option"][aria-selected="true"] {
+    background-color: #12939A !important;
+    color: #ffffff !important;
+}
+
+/* Multi value (selected tags) */
+div[class*="-multiValue"] {
+    background-color: #12939A !important;
+}
+
+div[class*="-multiValueLabel"] {
+    color: #ffffff !important;
+}
+
+div[class*="-multiValueRemove"]:hover {
+    background-color: #0e7580 !important;
+    color: #ffffff !important;
+}
+
+/* ===== Additional dropdown menu selectors ===== */
+
+/* Target dropdowns with dark-dropdown class */
+.dark-dropdown .Select-menu-outer,
+.dark-dropdown .Select-menu {
+    background-color: #2c3039 !important;
+}
+
+.dark-dropdown div[class*="-menu"],
+.dark-dropdown div[class*="-MenuList"] {
+    background-color: #2c3039 !important;
+}
+
+.dark-dropdown .Select-option,
+.dark-dropdown div[class*="-option"] {
+    background-color: #2c3039 !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-dropdown .Select-option:hover,
+.dark-dropdown div[class*="-option"]:hover {
+    background-color: #3a3f4b !important;
+}
+
+/* Target all dropdown components by ID */
+#callsign-filter .Select-menu-outer,
+#callsign-filter .Select-menu,
+#country-filter .Select-menu-outer,
+#country-filter .Select-menu {
+    background-color: #2c3039 !important;
+}
+
+#callsign-filter div[class*="-menu"],
+#country-filter div[class*="-menu"] {
+    background-color: #2c3039 !important;
+}
+
+/* Ensure options within these dropdowns are dark */
+#callsign-filter .Select-option,
+#country-filter .Select-option,
+#callsign-filter div[class*="-option"],
+#country-filter div[class*="-option"] {
+    background-color: #2c3039 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Portal-based menu (React Select v2+ sometimes uses portals) */
+.Select-menu-outer,
+[class*="MenuList"] {
+    background-color: #2c3039 !important;
+}
+
+/* Fallback for any white backgrounds in dropdowns */
+.Select,
+.Select div,
+[class*="select"] div {
+    /* Only override white backgrounds */
+}
+
+.Select-menu-outer,
+.Select-menu-outer > div,
+[class*="-MenuList"],
+[role="listbox"] {
+    background-color: #2c3039 !important;
+}
+
+/* ===== Date picker styling for dark mode ===== */
+.DateInput_input {
+    background-color: #2c3039 !important;
+    color: #e0e0e0 !important;
+    border-color: #3a3f4b !important;
+}
+
+.DateInput_input::placeholder {
+    color: #9ca3af !important;
+}
+
+.DateRangePickerInput {
+    background-color: #2c3039 !important;
+    border-color: #3a3f4b !important;
+}
+
+.DateRangePickerInput_arrow {
+    background-color: #2c3039 !important;
+}
+
+.CalendarDay__default {
+    background-color: #2c3039 !important;
+    color: #e0e0e0 !important;
+    border-color: #3a3f4b !important;
+}
+
+.CalendarDay__default:hover {
+    background-color: #3a3f4b !important;
+    color: #ffffff !important;
+}
+
+.CalendarDay__selected {
+    background-color: #12939A !important;
+    color: #ffffff !important;
+}
+
+.CalendarMonth_caption {
+    color: #e0e0e0 !important;
+}
+
+.DayPickerNavigation_button {
+    background-color: #2c3039 !important;
+    border-color: #3a3f4b !important;
+}
+
+.DayPicker_weekHeader {
+    color: #e0e0e0 !important;
+}
+
+/* ===== Global catch-all for dropdown menus ===== */
+/* This catches any remaining dropdown menu elements */
+.Select--multi .Select-menu-outer,
+.Select--multi .Select-menu,
+.Select--single .Select-menu-outer,
+.Select--single .Select-menu {
+    background-color: #2c3039 !important;
+}
+
+/* Catch-all for React-Select v2+ menus rendered anywhere in DOM */
+[class*="css-"][class*="menu"] {
+    background-color: #2c3039 !important;
+}
+
+[class*="css-"][class*="MenuList"] {
+    background-color: #2c3039 !important;
+}
+
+[class*="css-"][class*="option"] {
+    background-color: #2c3039 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Force override for absolutely positioned menus */
+[style*="position: absolute"] .Select-menu,
+[style*="position: absolute"] div[class*="-menu"] {
+    background-color: #2c3039 !important;
+}
+

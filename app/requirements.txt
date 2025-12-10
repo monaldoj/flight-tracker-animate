@@ -1,0 +1,10 @@
+dash
+dash-bootstrap-components
+pandas
+numpy
+plotly
+keplergl==0.3.2
+databricks-sql-connector[pyarrow]
+databricks-sdk==0.40.0
+setuptools<81
+

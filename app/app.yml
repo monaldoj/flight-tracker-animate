@@ -1,0 +1,12 @@
+# Databricks App configuration
+command: [
+  "python",
+  "app.py"
+]
+env:
+- name: "DATABRICKS_WAREHOUSE_ID"
+  valueFrom: "sql-warehouse"
+# - name: "MAPBOX_API_KEY"
+#   valueFrom: "MAPBOX_API_KEY"
+- name: "MAPBOX_API_KEY"
+  value: "pk.eyJ1IjoibW9uYWxkb2oiLCJhIjoiY2x6MzB0bnowM3R3NDJycHVpOGUxcDloaiJ9._6HAaS2J83jN2_2c0lJvfQ"

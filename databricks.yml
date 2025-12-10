@@ -1,0 +1,18 @@
+# Databricks Asset Bundle configuration for Flight Tracker App
+bundle:
+  name: flight_tracker_animate_app
+
+variables:
+  budget_policy_id:
+    description: Budget policy ID for the app (optional)
+    default: ""
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
+  prod:
+    mode: production

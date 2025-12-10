@@ -1,0 +1,28 @@
+# Databricks Resources configuration
+resources:
+  apps:
+    flight_tracker_animate_app:
+      name: flight-tracker-animate-app
+      source_code_path: ../app
+      description: "Real-time flight tracking application with animated flight paths"
+      resources:
+        - name: "sql-warehouse"
+          description: "A SQL warehouse for app to be able to work with"
+          sql_warehouse:
+            id: "862f1d757f0424f7" # "${var.sql_warehouse_id}"
+            permission: "CAN_USE"
+        - name: "MAPBOX_API_KEY"
+          description: "A Mapbox API key for app to be able to work with"
+          secret:
+            scope: "justin-fe-secrets"
+            key: "mapbox_pat"
+            permission: "READ"
+      user_api_scopes:
+        - sql
+      # resources:
+      #   - name: "sql-warehouse"
+      #     description: "A SQL warehouse for app to be able to work with"
+      #     sql_warehouse:
+      #       id: "d6d89fb9fd47b835" # "${var.sql_warehouse_id}"
+      #       permission: "CAN_USE"
+
