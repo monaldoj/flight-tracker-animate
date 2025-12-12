@@ -26,8 +26,8 @@ from databricks_utils import sqlQuery, get_databricks_server_hostname, get_datab
 #     return jsonify({"token": os.environ["MAPBOX_API_KEY"]})
 
 # Table configuration
-TABLE_NAME = "justinm.geospatial.flights_states"
-# TABLE_NAME = "justinm.opensky.ingest_flights"
+# TABLE_NAME = "justinm.geospatial.flights_states"
+TABLE_NAME = "justinm.opensky.ingest_flights"
 
 # Initialize Dash app
 app = Dash(
@@ -129,6 +129,7 @@ app.layout = dbc.Container(
                             dcc.Dropdown(
                                 id="country-filter",
                                 options=[],
+                                value=["United States"],  # Default to United States
                                 placeholder="Select country(ies)...",
                                 multi=True,
                                 className="mb-3 dark-dropdown",
@@ -252,18 +253,18 @@ def fetch_flight_data(callsigns=None, countries=None, start_date=None, end_date=
                 icao24, 
                 callsign, 
                 origin_country, 
-                last_position, 
-                timestamp,
+                time_position as last_position, 
+                last_contact as timestamp,
                 longitude as lon, 
-                latitude as lat, 
-                altitude, 
-                onground, 
-                groundspeed, 
-                track,
-                vertical_rate, 
-                squawk, 
-                spi, 
-                position_source
+                latitude as lat
+                -- geo_altitude as altitude
+                -- on_ground as onground, 
+                -- velocity as groundspeed, 
+                -- true_track as track,
+                -- vertical_rate, 
+                -- squawk, 
+                -- spi, 
+                -- category as position_source
             FROM {TABLE_NAME}
             WHERE latitude IS NOT NULL 
               AND longitude IS NOT NULL
@@ -279,12 +280,12 @@ def fetch_flight_data(callsigns=None, countries=None, start_date=None, end_date=
             query += f" AND origin_country IN ({countries_str})"
         
         if start_date:
-            query += f" AND timestamp >= '{start_date}'"
+            query += f" AND last_contact >= '{start_date}'"
         
         if end_date:
-            query += f" AND timestamp <= '{end_date}'"
+            query += f" AND last_contact <= '{end_date}'"
         
-        query += " ORDER BY timestamp"
+        query += " ORDER BY last_contact"
         
         print(f"Executing query: {query}")
         
@@ -548,8 +549,8 @@ def create_kepler_map(df):
             'mapState': {
                 'bearing': 0,
                 'dragRotate': False,
-                'latitude': 37.7749,
-                'longitude': -122.4194,
+                'latitude': 38.6274,
+                'longitude': -90.1982,
                 'pitch': 0,
                 'zoom': 4,
                 'isSplit': False,
@@ -783,16 +784,16 @@ def update_map_and_stats(data_json):
         total_records = len(df)
         countries = df['origin_country'].nunique()
         
-        avg_altitude = df['altitude'].mean()
-        avg_speed = df['groundspeed'].mean()
+        # avg_altitude = df['altitude'].mean()
+        # avg_speed = df['groundspeed'].mean()
         
         stats = html.Div([
             html.P([html.Strong("Total Flights: "), f"{total_flights}"], style={"color": "#e0e0e0"}),
             html.P([html.Strong("Total Records: "), f"{total_records}"], style={"color": "#e0e0e0"}),
             html.P([html.Strong("Countries: "), f"{countries}"], style={"color": "#e0e0e0"}),
             html.Hr(),
-            html.P([html.Strong("Avg Altitude: "), f"{avg_altitude:.0f} m" if not np.isnan(avg_altitude) else "N/A"], style={"color": "#e0e0e0"}),
-            html.P([html.Strong("Avg Speed: "), f"{avg_speed:.1f} m/s" if not np.isnan(avg_speed) else "N/A"], style={"color": "#e0e0e0"}),
+            # html.P([html.Strong("Avg Altitude: "), f"{avg_altitude:.0f} m" if not np.isnan(avg_altitude) else "N/A"], style={"color": "#e0e0e0"}),
+            # html.P([html.Strong("Avg Speed: "), f"{avg_speed:.1f} m/s" if not np.isnan(avg_speed) else "N/A"], style={"color": "#e0e0e0"}),
         ], style={"fontSize": "14px", "color": "#e0e0e0"})
         
         # with open("map.html", "r") as f:
