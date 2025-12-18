@@ -399,6 +399,49 @@ def get_unique_countries():
         return []
 
 
+def get_random_callsigns(start_date=None, end_date=None, limit=100):
+    """
+    Get random callsigns from the table that have data within the specified time range
+    
+    Args:
+        start_date: Start timestamp for filtering (in Eastern time format)
+        end_date: End timestamp for filtering (in Eastern time format)
+        limit: Number of random callsigns to return
+    
+    Returns:
+        List of callsign strings
+    """
+    try:
+        query = f"""
+            SELECT DISTINCT callsign 
+            FROM {TABLE_NAME} 
+            WHERE callsign IS NOT NULL
+        """
+        
+        # Add time filters (convert EST input to UTC for comparison)
+        if start_date:
+            query += f" AND last_contact >= to_utc_timestamp('{start_date}', 'America/New_York')"
+        
+        if end_date:
+            query += f" AND last_contact <= to_utc_timestamp('{end_date}', 'America/New_York')"
+        
+        query += f"""
+            ORDER BY RAND()
+            LIMIT {limit}
+        """
+        
+        print(f"Executing query: {query}")
+        df = sqlQuery(query)
+        callsigns = df['callsign'].tolist()
+        
+        print(f"Selected {len(callsigns)} random callsigns for time range {start_date} to {end_date}")
+        return callsigns
+        
+    except Exception as e:
+        print(f"Error fetching random callsigns: {e}")
+        return []
+
+
 def create_kepler_map(df):
     """
     Create Kepler.gl map with flight path animation
@@ -679,8 +722,12 @@ def load_flight_data(n_clicks, n_intervals, callsigns, countries, start_datetime
             six_hours_ago = current_time - timedelta(hours=6)
             start_datetime = six_hours_ago.strftime('%Y-%m-%dT%H:%M')
             end_datetime = current_time.strftime('%Y-%m-%dT%H:%M')
-            # Don't filter by callsign - show all
-            callsigns = None if not callsigns else callsigns
+            # Get 100 random callsigns that have data within this time window
+            start_date = start_datetime.replace('T', ' ') + ':00'
+            end_date = end_datetime.replace('T', ' ') + ':00'
+            callsigns = get_random_callsigns(start_date=start_date, end_date=end_date, limit=100)
+            # Don't filter by country for initial load
+            countries = None
     elif trigger_id == "load-button":
         if not n_clicks:
             raise PreventUpdate
@@ -697,6 +744,8 @@ def load_flight_data(n_clicks, n_intervals, callsigns, countries, start_datetime
         # Convert from 'YYYY-MM-DDTHH:MM' to 'YYYY-MM-DD HH:MM:SS'
         end_date = end_datetime.replace('T', ' ') + ':00'
     
+    print(f"Callsigns: {callsigns}")
+
     try:
         # Fetch data
         df = fetch_flight_data(
