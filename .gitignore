@@ -59,6 +59,4 @@ htmlcov/
 *.bak
 .cache/
 
-# Generated files
-map.html
 

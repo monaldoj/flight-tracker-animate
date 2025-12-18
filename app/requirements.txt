@@ -3,6 +3,7 @@ dash-bootstrap-components
 pandas
 numpy
 plotly
+pytz
 keplergl==0.3.2
 databricks-sql-connector[pyarrow]
 databricks-sdk==0.40.0

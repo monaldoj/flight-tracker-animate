@@ -139,7 +139,7 @@ app.layout = dbc.Container(
                         
                         # Timestamp range filter
                         html.Div([
-                            dbc.Label("Start Date & Time", html_for="start-datetime-filter", style={"color": "#e0e0e0"}),
+                            dbc.Label("Start Date & Time (EST)", html_for="start-datetime-filter", style={"color": "#e0e0e0"}),
                             dbc.Input(
                                 id="start-datetime-filter",
                                 type="datetime-local",
@@ -147,7 +147,7 @@ app.layout = dbc.Container(
                                 className="mb-2",
                                 style={"backgroundColor": "#2c3039", "color": "#e0e0e0", "border": "1px solid #3a3f4b"}
                             ),
-                            dbc.Label("End Date & Time", html_for="end-datetime-filter", style={"color": "#e0e0e0", "marginTop": "10px"}),
+                            dbc.Label("End Date & Time (EST)", html_for="end-datetime-filter", style={"color": "#e0e0e0", "marginTop": "10px"}),
                             dbc.Input(
                                 id="end-datetime-filter",
                                 type="datetime-local",
@@ -248,13 +248,14 @@ def fetch_flight_data(callsigns=None, countries=None, start_date=None, end_date=
         # cursor = connection.cursor()
         
         # Build query with filters
+        # Convert UTC timestamps to Eastern time for display
         query = f"""
             SELECT 
                 icao24, 
                 callsign, 
                 origin_country, 
-                time_position as last_position, 
-                last_contact as timestamp,
+                from_utc_timestamp(time_position, 'America/New_York') as last_position, 
+                from_utc_timestamp(last_contact, 'America/New_York') as timestamp,
                 longitude as lon, 
                 latitude as lat
                 -- geo_altitude as altitude
@@ -279,11 +280,12 @@ def fetch_flight_data(callsigns=None, countries=None, start_date=None, end_date=
             countries_str = ", ".join([f"'{c}'" for c in countries])
             query += f" AND origin_country IN ({countries_str})"
         
+        # Convert Eastern time input to UTC for filtering
         if start_date:
-            query += f" AND last_contact >= '{start_date}'"
+            query += f" AND last_contact >= to_utc_timestamp('{start_date}', 'America/New_York')"
         
         if end_date:
-            query += f" AND last_contact <= '{end_date}'"
+            query += f" AND last_contact <= to_utc_timestamp('{end_date}', 'America/New_York')"
         
         query += " ORDER BY last_contact"
         
