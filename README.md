@@ -6,6 +6,8 @@ An interactive flight tracking application built with Plotly Dash and Kepler.gl,
 ![Python](https://img.shields.io/badge/python-3.8+-blue)
 ![Dash](https://img.shields.io/badge/dash-2.14+-orange)
 
+![flight-tracker-animate-gif](https://github.com/user-attachments/assets/9c1353b5-5fbf-415a-be69-759c13c7a5eb)
+
 ## 🌟 Features
 
 * **Kepler.gl Visualization**: Beautiful, interactive map with native animation capabilities
